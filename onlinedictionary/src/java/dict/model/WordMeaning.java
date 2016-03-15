@@ -5,6 +5,9 @@
  */
 package dict.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author 984910
@@ -26,8 +29,8 @@ public class WordMeaning {
     }
     
     private String word;
-    private String wordType;
-    private String definition;
+    private List<String> wordType=new ArrayList<String>();
+    private List<String> definition=new ArrayList<String>();
     private int count=0; 
 
     /**
@@ -45,32 +48,28 @@ public class WordMeaning {
     }
 
     /**
-     * @return the wordType
-     */
-    public String getWordType() {
-        return wordType;
-    }
-
-    /**
      * @param wordType the wordType to set
      */
-    public void setWordType(String wordType) {
-        this.wordType = wordType;
+    public void addWordTypeDefinition(String wordType,String definition) {
+        this.wordType.add(wordType);
+        this.definition.add(definition);
+        
     }
 
-    /**
-     * @return the definition
-     */
-    public String getDefinition() {
+    public List<String> getDefinition() {
         return definition;
     }
-
-    /**
-     * @param definition the definition to set
-     */
-    public void setDefinition(String definition) {
-        this.definition = definition;
+    
+    public String getDefinition(int i) {
+        return definition.get(i);
     }
     
-    
+     public List<String> getWordType() {
+        return wordType;
+    }
+     
+      public String getWordType(int i) {
+        return wordType.get(i);
+    }
+   
 }
