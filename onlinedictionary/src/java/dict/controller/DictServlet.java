@@ -9,6 +9,7 @@ import dict.model.WordMeaning;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -36,21 +38,21 @@ public class DictServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DictServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(DictServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+       String input=request.getParameter("word");
+       System.out.print(input);
+       JSONObject job; //create a JSON Object obj.
+       JSONArray jArray=new JSONArray(); //create a JSON Array obj.
+       List<WordMeaning> wordMeaningList =new WordMeaningDao().getWordMeaning("A");
+       jArray.addAll(wordMeaningList);
+       for(WordMeaning w:wordMeaningList){
+           System.out.println(w.getWord()+":"+w.getDefinition());
         }
-//        String word=request.getParameter("wordInput");
-//        System.out.println(word);
-        JSONArray jArray=new WordMeaningDao().getWordMeaning();
-        response.setContentType("application/text");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jArray.toString());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("newhtml.jsp");
-        dispatcher.forward(request, response);
-        
-                
+       response.getWriter().write(jArray.toJSONString());  
     }
 
     /**

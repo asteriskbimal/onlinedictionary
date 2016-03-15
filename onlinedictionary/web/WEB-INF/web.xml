@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DictServlet</servlet-name>
-        <url-pattern>/dictionary</url-pattern>
+        <url-pattern>/DictServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -71,5 +71,5 @@ public class WordMeaning {
       public String getWordType(int i) {
         return wordType.get(i);
     }
-   
+      
 }

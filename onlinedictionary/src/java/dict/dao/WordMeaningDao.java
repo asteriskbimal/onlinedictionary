@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -27,44 +29,50 @@ public class WordMeaningDao {
 
     private Connection conn = new DbConnection().getConnection();
     private Statement statement = null;
-    String userParameter="A";
+     ResultSet resultSet =null;
+    //String userParameter="A";
    
+//    JSONObject job; //create a JSON Object obj.
+//    JSONArray jArray; //create a JSON Array obj.
     
-    JSONObject job=new JSONObject(); //create a JSON Object obj.
-    JSONArray jArray = new JSONArray(); //create a JSON Array obj.
-    
-    public JSONArray getWordMeaning( ) {
+    public List<WordMeaning> getWordMeaning(String userParameter) {
+       // jArray = new JSONArray();
         WordMeaning wordMeaning = new WordMeaning();
-        String query = "Select word,wordtype,definition from entries where word ="
+        List<WordMeaning> wordMeaningList = new ArrayList<WordMeaning>();
+        String query = "Select * from entries where word ="
                             + "'" + userParameter + "'"
-                            + "order by word,wordtype,definition";
+                            + " order by word,wordtype,definition";
         try {
-            PreparedStatement statement = conn.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(query);
 
-            if (resultSet.next()) {
-                
-                wordMeaning.setWord(resultSet.getString(1));
-                wordMeaning.addWordTypeDefinition(resultSet.getString(2), resultSet.getString(3));
-                job.put("wordtype", resultSet.getString(2));
-                job.put("worDefinition", resultSet.getString(3));
-            }
-            jArray.add(job); //add the JSON obj (job) to an JSON array.This will make it easier to fetch the results of each.
-            job.clear();
+//            if (resultSet.next()) {
+//                
+//                wordMeaning.setWord(resultSet.getString(1));
+////                wordMeaning.addWordTypeDefinition(resultSet.getString(2), resultSet.getString(3));
+//////                job.put("wordtype", resultSet.getString(2));
+//////                job.put("worDefinition", resultSet.getString(3));
+//            }
+////            jArray.add(job); //add the JSON obj (job) to an JSON array.This will make it easier to fetch the results of each.
+////            job.clear();
 
             while (resultSet.next()) {
+//                job=new JSONObject()
+                wordMeaning.setWord(resultSet.getString(1));
                 wordMeaning.addWordTypeDefinition(resultSet.getString(2), resultSet.getString(3));
-                job.put("wordtype", resultSet.getString(2));
-                job.put("worDefinition", resultSet.getString(3));
-                jArray.add(job); //add the JSON obj (job) to an JSON array.This will make it easier to fetch the results of each.
-                job.clear();
+//                job.put("wordtype", resultSet.getString(2));
+//                job.put("worDefinition", resultSet.getString(3));
+//                jArray.add(job); //add the JSON obj (job) to an JSON array.This will make it easier to fetch the results of each.
+//                job.clear();
+                wordMeaningList.add(wordMeaning);
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
               
-        return jArray;
+       //  jArray.add(wordMeaning);
+         return wordMeaningList;
     }
 //    
 //    public static void main(String[] main){
