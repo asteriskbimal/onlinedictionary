@@ -30,7 +30,7 @@ public class DbConnection {
    private static DbConnection instance = null;
    protected DbConnection(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+           // Class.forName("com.mysql.jdbc.Driver");
             conn=DriverManager.getConnection(CONNECTIONSTRING,USERNAME,PASSWORD);
         } catch (SQLException ex) {
             

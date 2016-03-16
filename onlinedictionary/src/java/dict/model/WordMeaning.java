@@ -13,63 +13,39 @@ import java.util.List;
  * @author 984910
  */
 public class WordMeaning {
-
-    /**
-     * @return the count
-     */
-    public int getCount() {
-        return count;
-    }
-
-    /**
-     * @param aCount the count to set
-     */
-    public void setCount(int count) {
-        count++;
-    }
-    
+   
     private String word;
-    private List<String> wordType=new ArrayList<String>();
-    private List<String> definition=new ArrayList<String>();
-    private int count=0; 
+    private String wordType;
+    private String definition;
 
-    /**
-     * @return the word
-     */
     public String getWord() {
         return word;
     }
 
-    /**
-     * @param word the word to set
-     */
     public void setWord(String word) {
         this.word = word;
     }
 
-    /**
-     * @param wordType the wordType to set
-     */
-    public void addWordTypeDefinition(String wordType,String definition) {
-        this.wordType.add(wordType);
-        this.definition.add(definition);
-        
-    }
-
-    public List<String> getDefinition() {
+   
+    public String getDefinition() {
         return definition;
     }
     
-    public String getDefinition(int i) {
-        return definition.get(i);
-    }
-    
-     public List<String> getWordType() {
+     
+      public String getWordType() {
         return wordType;
     }
-     
-      public String getWordType(int i) {
-        return wordType.get(i);
+      
+      public void setDefinition(String definition) {
+        this.definition=definition;
     }
+         
+      public void setWordType(String wordType) {
+        this.wordType=wordType;
+    }
+      
+      public String toString(){
+          return (this.word+":"+this.wordType+":"+this.definition);
+      }
       
 }

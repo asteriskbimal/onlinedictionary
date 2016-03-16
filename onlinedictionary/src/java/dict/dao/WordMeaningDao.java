@@ -37,7 +37,7 @@ public class WordMeaningDao {
     
     public List<WordMeaning> getWordMeaning(String userParameter) {
        // jArray = new JSONArray();
-        WordMeaning wordMeaning = new WordMeaning();
+        WordMeaning wordMeaning = null;
         List<WordMeaning> wordMeaningList = new ArrayList<WordMeaning>();
         String query = "Select * from entries where word ="
                             + "'" + userParameter + "'"
@@ -58,8 +58,10 @@ public class WordMeaningDao {
 
             while (resultSet.next()) {
 //                job=new JSONObject()
+                wordMeaning=new WordMeaning();
                 wordMeaning.setWord(resultSet.getString(1));
-                wordMeaning.addWordTypeDefinition(resultSet.getString(2), resultSet.getString(3));
+                wordMeaning.setWordType(resultSet.getString(2)); 
+                wordMeaning.setDefinition(resultSet.getString(3));
 //                job.put("wordtype", resultSet.getString(2));
 //                job.put("worDefinition", resultSet.getString(3));
 //                jArray.add(job); //add the JSON obj (job) to an JSON array.This will make it easier to fetch the results of each.
@@ -74,13 +76,12 @@ public class WordMeaningDao {
        //  jArray.add(wordMeaning);
          return wordMeaningList;
     }
-//    
-//    public static void main(String[] main){
-//        
-//        WordMeaning test=new WordMeaningDao().getWordMeaning();
-//        System.out.println(test.getWord()+":\n");
-//        for(int i=0;i<test.getDefinition().size();i++){
-//             System.out.println(test.getWordType(i)+":"+test.getDefinition(i)+":\n");
-//        }
-//    }
+    
+    public static void main(String[] main){
+        
+        List<WordMeaning> test=new WordMeaningDao().getWordMeaning("A");
+        for(WordMeaning w:test){
+            System.out.println(w.getWordType()+":"+w.getDefinition());
+        }
+    }
 }

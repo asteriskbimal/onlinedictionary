@@ -7,12 +7,10 @@ package dict.controller;
 import dict.dao.WordMeaningDao;
 import dict.model.WordMeaning;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,20 +36,40 @@ public class DictServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(DictServlet.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DictServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
        String input=request.getParameter("word");
        System.out.print(input);
-       JSONObject job; //create a JSON Object obj.
+       JSONObject job =null; //create a JSON Object obj.
        JSONArray jArray=new JSONArray(); //create a JSON Array obj.
-       List<WordMeaning> wordMeaningList =new WordMeaningDao().getWordMeaning("A");
-       jArray.addAll(wordMeaningList);
+       List<WordMeaning> wordMeaningList =new WordMeaningDao().getWordMeaning(input);
+//       //jArray.addAll(wordMeaningList); 
+        int i=0;
        for(WordMeaning w:wordMeaningList){
-           System.out.println(w.getWord()+":"+w.getDefinition());
-        }
+            job = new JSONObject();
+            job.put("definition",w.getDefinition());
+            job.put("wordType",w.getWordType());
+            job.put("word",w.getWord());
+            jArray.add(job);
+            
+        }                      
+                             
+               
+//    JSONArray jArraya = new JSONArray();
+    
+//    jArraya.add("bimal");
+//    jArraya.add("bijay");
+//    job.put("a","Apple");
+//    job.put("b","Ball");
+//    jArraya.add(job);
+//    joba.clear();
+//    joba.put("a","Air");
+//    joba.put("b","Bag");
+//    jArraya.add(joba);
+
        response.getWriter().write(jArray.toJSONString());  
     }
 

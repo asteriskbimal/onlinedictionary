@@ -7,4 +7,20 @@ and open the template in the editor.
     Created on : Mar 14, 2016, 10:17:19 PM
     Author     : bimal
 */
+#somediv{
+   
+    font-family: arial;
+    font-size: 12px;
+    
+    
+}
+
+table{  
+    border:1 px solid; 
+    width:800px;
+    
+}
+table tr th,td{
+    padding:5px;
+}
 
