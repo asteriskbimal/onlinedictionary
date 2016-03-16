@@ -8,6 +8,14 @@
         <servlet-name>DictServlet</servlet-name>
         <url-pattern>/DictServlet</url-pattern>
     </servlet-mapping>
+     <servlet>
+        <servlet-name>WordServlet</servlet-name>
+        <servlet-class>dict.controller.WordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WordServlet</servlet-name>
+        <url-pattern>/WordServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package dict.controller;
+import dict.dao.WordDao;
 import dict.dao.WordMeaningDao;
 import dict.model.WordMeaning;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,7 @@ import org.json.simple.JSONObject;
  *
  * @author 984910
  */
-public class DictServlet extends HttpServlet {
+public class WordServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -38,23 +40,24 @@ public class DictServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DictServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WordServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-       String input=request.getParameter("word");
+       String input=request.getParameter("keyword");
        System.out.print(input);
        JSONObject job =null; //create a JSON Object obj.
        JSONArray jArray=new JSONArray(); //create a JSON Array obj.
-       List<WordMeaning> wordMeaningList =new WordMeaningDao().getWordMeaning(input);
+       List<String> wordList =new WordDao().getWordMeaning(input);
 //       //jArray.addAll(wordMeaningList); 
+        System.out.println(wordList);
         int i=0;
-       for(WordMeaning w:wordMeaningList){
+       for(String w:wordList){
+           
             job = new JSONObject();
-            job.put("definition",w.getDefinition());
-            job.put("wordType",w.getWordType());
-            job.put("word",w.getWord());
+            job.put("words",w);
             jArray.add(job);
             
-        }                      
+        }  
+       System.out.println(wordList);
                              
                
 //    JSONArray jArraya = new JSONArray();
